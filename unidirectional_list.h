@@ -23,6 +23,7 @@ public:
 	virtual void PushBack(T data_);
 	virtual void PushFront(T data_);
 	virtual void Insert(T data_, int index_);
+	virtual T& GetFirst();
 
 	virtual void Erase(int index_);
 
@@ -30,8 +31,6 @@ public:
 
 	Node<T>& GetHead();
 	Node<T>& FindNodeByData(T data_);
-
-	virtual T& operator[](const int index_);
 
 	UnidirectionalList();
 
@@ -80,6 +79,12 @@ void UnidirectionalList<T>::Insert(T data_, int index_)
 }
 
 template<typename T>
+T& UnidirectionalList<T>::GetFirst()
+{
+	return head_.get()->next_el_.get()->data_;
+}
+
+template<typename T>
 UnidirectionalList<T>::Node<T>& UnidirectionalList<T>::GetHead()
 {
 	return *(head_.get()->next_el_.get());
@@ -97,22 +102,6 @@ UnidirectionalList<T>::Node<T>& UnidirectionalList<T>::FindNodeByData(T data_)
 		}
 		current_el = current_el.get()->next_el_;
 	};
-}
-
-template<typename T>
-T & UnidirectionalList<T>::operator[](const int index_)
-{
-	int counter = 0;
-
-	shared_ptr<Node<T>> current_el = head_.get()->next_el_;
-
-	while (current_el.get()) {
-		if (counter == index_) {
-			return current_el.get()->data_;
-		}
-		current_el = current_el.get()->next_el_;
-		counter++;
-	}
 }
 
 template<typename T>

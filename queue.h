@@ -4,30 +4,36 @@
 
 template <typename T>
 class Queue {
-	BidirectionalList<T> list;
+	UnidirectionalList<T>* list;
 
 public:
+	Queue(UnidirectionalList<T>* list);
 	T& Pop();
 	void PushBack(T data_);
 	bool isEmpty();
 };
 
 template<typename T>
+Queue<T>::Queue(UnidirectionalList<T>* list) : list(list)
+{
+}
+
+template<typename T>
 T& Queue<T>::Pop()
 {
-	T temp_el_ = list[0];
-	list.Erase(0);
-	return temp_el_;
+	T first = list->GetFirst();
+	list->Erase(0);
+	return first;
 }
 
 template<typename T>
 void Queue<T>::PushBack(T data_)
 {
-	list.PushBack(data_);
+	list->PushBack(data_);
 }
 
 template<typename T>
 bool Queue<T>::isEmpty()
 {
-	return list.getSize();
+	return !list->getSize();
 }
